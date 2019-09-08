@@ -4,7 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Online Todo List supported by Firebase</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
   </head>
-  <body></body>
+  <body>
+    <div class="container my-5">
+      <h2>My Todos</h2>
+      <ul>
+        <li>Checkout my repos</li>
+      </ul>
+      <form>
+        <label for="todos">Add a new todo:</label>
+        <div class="input-group">
+          <input type="text" id="todos" class="form-control" required />
+          <div class="input-group-append">
+            <input
+              type="submit"
+              value="add"
+              class="btn btn-outline-secondary"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-firestore.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#config-web-app -->
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCWfDN1lpbVlPftzH2LBEJy_Kx7cmmY3eM",
+        authDomain: "online-todos.firebaseapp.com",
+        databaseURL: "https://online-todos.firebaseio.com",
+        projectId: "online-todos",
+        storageBucket: "online-todos.appspot.com",
+        messagingSenderId: "366065450527",
+        appId: "1:366065450527:web:37427ab78db4c0007bdf2a"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      //this is  written by myself:
+      //we re creating const to store main database reference:
+
+      const db = firebase.firestore();
+    </script>
+    <script src="sandbox.js"></script>
+  </body>
 </html>
