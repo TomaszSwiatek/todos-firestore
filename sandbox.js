@@ -1,4 +1,5 @@
 const list = document.querySelector("ul");
+const form = document.querySelector("form");
 const addTodo = todo => {
   let time = todo.created_at.toDate();
   let html = `
@@ -28,3 +29,27 @@ db.collection("todos")
   .catch(err => {
     console.log(err);
   });
+
+//SAVING TODOS
+//firstly create submit event on form to send todos:
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const now = new Date();
+  const todo = {
+    //we do this becouse of id saved at html in form tag
+    title: form.todos.value,
+    //we get access to firebase, then to firestore library (we can do this becouse of CDN's we included, and automaticly we use these variables!). it cvreates for us timestamp-firebase object which we want to store in firebase - from our date javascript object.
+    created_at: firebase.firestore.Timestamp.fromDate(now)
+  };
+  //at now we re adding new todo to our collection (it will be the firebase document). it is async method:
+  db.collection("todos")
+    .add(todo)
+    .then(() => {
+      console.log(todo);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
