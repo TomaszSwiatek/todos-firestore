@@ -1,10 +1,11 @@
 const list = document.querySelector("ul");
 const addTodo = todo => {
+  let time = todo.created_at.toDate();
   let html = `
 
     <li class="">
     <div>${todo.title}</div>
-
+    <div>${time}</div>
     </li>
 
     `;
