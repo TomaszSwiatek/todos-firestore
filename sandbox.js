@@ -4,12 +4,11 @@ const addTodo = todo => {
 
     <li class="">
     <div>${todo.title}</div>
-    <div>${todo.created_at}</div>
-    <div>${todo.author}</div>
+
     </li>
 
     `;
-  console.log(html);
+  list.innerHTML += html;
 };
 
 //get todos from firestore:
