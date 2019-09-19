@@ -1,12 +1,14 @@
 const list = document.querySelector("ul");
 const form = document.querySelector("form");
-const addTodo = todo => {
+// const button = document.querySelector("button");
+const addTodo = (todo, id) => {
   let time = todo.created_at.toDate();
   let html = `
 
-    <li class="">
+    <li class="" data-id="${id}">
     <div>${todo.title}</div>
     <div>${time}</div>
+    <button class="btn btn-primary btn-sm my-2">Delete</button>
     </li>
 
     `;
@@ -22,8 +24,8 @@ db.collection("todos")
     // console.log("data fetched", snapshot.docs[0].data());
     //reference snapshot.docs is an array and we can cycle through and use for each item built in method call data() to get the data:
     snapshot.docs.forEach(doc => {
-      //   console.log(doc.data());
-      addTodo(doc.data());
+      // console.log(doc.id);
+      addTodo(doc.data(), doc.id);
     });
   })
   .catch(err => {
@@ -52,4 +54,16 @@ form.addEventListener("submit", e => {
     .catch(err => {
       console.log(err);
     });
+});
+//deleting each todo
+//we use event delegation so we do event on first common (wspólny) parent which is list in this case:
+list.addEventListener("click", e => {
+  if (e.target.tagName === "BUTTON") {
+    const id = e.target.parentElement.getAttribute("data-id");
+    // console.log(e.target.parentElement.getAttribute("data-id"));
+    //we got id from database by custom data-id written in html template. we  use it to get reference  to chosen one document by using method: doc() and as argument we pass and id, which we ve got.
+    db.collection("todos")
+      .doc(id)
+      .delete();
+  }
 });
