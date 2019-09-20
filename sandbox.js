@@ -1,6 +1,6 @@
 const list = document.querySelector("ul");
 const form = document.querySelector("form");
-// const button = document.querySelector("button");
+const buttonUnsubscribe = document.querySelector("#unsubscribe");
 const addTodo = (todo, id) => {
   let time = todo.created_at.toDate();
   let html = `
@@ -44,12 +44,13 @@ const deleteTodo = id => {
   });
 };
 
-db.collection("todos").onSnapshot(snapshot => {
+const unsub = db.collection("todos").onSnapshot(snapshot => {
   snapshot.docChanges().forEach(change => {
     const doc = change.doc;
     //get todos and show on website:
     if (change.type === "added") {
       addTodo(doc.data(), doc.id);
+      form.reset(); //here we clear the input after sending todo to firebase and to DOM.
       //here we remove chosen todo from DOM, after todo was deleted from firebase:
     } else if (change.type === "removed") {
       deleteTodo(doc.id);
@@ -91,4 +92,8 @@ list.addEventListener("click", e => {
       .doc(id)
       .delete();
   }
+});
+//unsubscribe  listening from data changes in the collection:
+buttonUnsubscribe.addEventListener("click", () => {
+  unsub();
 });
